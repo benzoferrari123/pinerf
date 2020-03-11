@@ -10,7 +10,7 @@ import struct
 # Connect a client socket to my_server:8000 (change my_server to the
 # hostname of your server)
 client_socket = socket.socket()
-client_socket.connect(('192.168.1.1', 6969))
+client_socket.connect(('192.168.4.1', 6969))
 
 # Make a file-like object out of the connection
 connection = client_socket.makefile('wb')
@@ -20,6 +20,7 @@ try:
         # Start a preview and let the camera warm up for 2 seconds
         camera.start_preview()
         time.sleep(2)
+        
 
         # Note the start time and construct a stream to hold image data
         # temporarily (we could write it directly to connection but in this
