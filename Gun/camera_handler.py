@@ -6,11 +6,23 @@ import time
 import socket
 import io
 import struct
+import time
 
 # Connect a client socket to my_server:8000 (change my_server to the
 # hostname of your server)
 client_socket = socket.socket()
-client_socket.connect(('192.168.4.1', 6969))
+
+connected = False
+while not connected:
+    try:
+        client_socket.connect(('192.168.4.1', 6969))
+        connected = True
+        print("Connected!")
+        break
+    except Exception as e:
+        print("Failed to connect: " + format(e) + " retrying...")
+        time.sleep(1)
+        pass
 
 # Make a file-like object out of the connection
 connection = client_socket.makefile('wb')
@@ -20,8 +32,6 @@ try:
         # Start a preview and let the camera warm up for 2 seconds
         camera.start_preview()
         time.sleep(2)
-        
-
         # Note the start time and construct a stream to hold image data
         # temporarily (we could write it directly to connection but in this
         # case we want to find out the size of each capture first to keep
