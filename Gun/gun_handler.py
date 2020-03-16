@@ -4,9 +4,25 @@ https://picamera.readthedocs.io/en/release-1.9/recipes1.html#capturing-to-a-netw
 from picamera import PiCamera
 import time
 import socket
+import os
 import io
 import struct
-import time
+import RPi.GPIO as gpio
+
+# set reset pin
+gpio.setmode(gpio.BCM)
+gpio.setup(18, gpio.IN, pull_up_down=gpio.PUD_UP)
+
+
+# function for restarting the pi
+def Restart(channel):
+    print("System GPIO reboot event. The system is rebooting NOW!")
+    time.sleep(1)
+    os.system("sudo shutdown -r now")
+
+
+# add the pi restart event
+gpio.add_event_detect(18, gpio.FALLING, callback=Restart, bouncetime=2000)
 
 # Connect a client socket to my_server:8000 (change my_server to the
 # hostname of your server)
