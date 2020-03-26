@@ -16,8 +16,7 @@ gpio.setwarnings(False)
 gpio.setmode(gpio.BCM)
 gpio.setup(18, gpio.OUT)
 
-# Connect a client socket to my_server:8000 (change my_server to the
-# hostname of your server)
+# Connect a client socket
 client_socket = socket.socket()
 
 connected = False
