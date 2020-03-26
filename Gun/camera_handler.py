@@ -28,8 +28,7 @@ def Restart(channel):
 # add the pi restart event
 gpio.add_event_detect(18, gpio.FALLING, callback=Restart, bouncetime=2000)
 
-# Connect a client socket to my_server:8000 (change my_server to the
-# hostname of your server)
+# Connect a client socket
 client_socket = socket.socket()
 
 connected = False
