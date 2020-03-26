@@ -1,5 +1,9 @@
 '''
 https://picamera.readthedocs.io/en/release-1.9/recipes1.html#capturing-to-a-network-stream
+
+This script will control the PiZero for the nerf blaster gun.
+Pin 18 is used for a RESET signal to force reset the pi if it crashes, disconnects etc...
+
 '''
 from picamera import PiCamera
 import time
