@@ -1,2 +1,8 @@
 Turret Base Scripts/opencv
 Gun/shutdown_reset_control.py
+Documentation/sources.aux
+Documentation/sources.fdb_latexmk
+Documentation/sources.fls
+Documentation/sources.log
+Documentation/sources.synctex.gz
+Documentation/__latexindent_temp.tex
