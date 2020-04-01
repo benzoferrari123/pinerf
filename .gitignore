@@ -1,5 +1,5 @@
-Turret Base Scripts/opencv
-Gun/shutdown_reset_control.py
+Turret_Base_Scripts/opencv
+Gun_Scripts/shutdown_reset_control.py
 Documentation/sources.aux
 Documentation/sources.fdb_latexmk
 Documentation/sources.fls
