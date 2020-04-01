@@ -4,7 +4,10 @@ This application uses a Raspberry Pi and Raspberry Pi Zero to recognise authoriz
 The low power Pi Zero captures images through it's own camera and transmits them to the base station. The base station will perform the facial recognition algorithm and will send a signal back to the Pi Zero once it has successfully identified a face. This will 'unlock' the gun and allow it to be used.
 
 # Contributers
-benzoferrari123 - Ben Hanmer
+benzoferrari123 - Ben Hanmer - Turret Base Pi Scripts
 
-iShauny - Shaun Loughery
+iShauny - Shaun Loughery - Gun Control Scripts
 
+LShaw1872 - Lewis Shaw - 3D Modelling Design
+
+CaesarBonsai - Drew Benton - Electronic Circuit Design
