@@ -16,18 +16,18 @@ import struct
 HOST = '127.0.0.1'
 CAMERA_PORT = 6969
 
-camera_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 print('Socket created')
 
-camera_socket.bind((HOST, CAMERA_PORT))
+socket.bind((HOST, CAMERA_PORT))
 
 print('Socket bind complete')
 
-camera_socket.listen(1)
+socket.listen(1)
 print('Socket now listening')
 
-conn, addr = camera_socket.accept()
+conn, addr = socket.accept()
 
 data = b""
 payload_size = struct.calcsize(">L")

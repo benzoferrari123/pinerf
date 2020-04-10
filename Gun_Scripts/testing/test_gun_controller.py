@@ -27,13 +27,13 @@ GUN_CONTROL_PIN = 22
 TURRET_BASE_IP = '127.0.0.1'
 
 # Connect a camera client socket
-camera_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # establish camera socket - retries until successful
 connected = False
 while not connected:
     try:
-        camera_socket.connect((TURRET_BASE_IP, CAMERA_PORT))
+        socket.connect((TURRET_BASE_IP, CAMERA_PORT))
         connected = True
         print("Connected!")
         break
@@ -43,7 +43,7 @@ while not connected:
         pass
 
 # Make a file-like object out of the connection
-connection = camera_socket.makefile('wb')
+connection = socket.makefile('wb')
 cam = cv2.VideoCapture(0)
 cam.set(3, 320)
 cam.set(4, 240)
@@ -58,13 +58,13 @@ try:
         size = len(data)
 
         print("{}: {}".format(img_counter, size))
-        camera_socket.sendall(struct.pack(">L", size) + data)
+        socket.sendall(struct.pack(">L", size) + data)
         img_counter += 1
 
         # check the data being received from the base
-        data = camera_socket.recv(BUFFER)
+        data = socket.recv(BUFFER)
         print("Received: ", data)
 
 finally:
     connection.close()
-    camera_socket.close()
+    socket.close()
