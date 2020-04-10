@@ -19,7 +19,6 @@ import io
 import struct
 
 BUFFER = 1024  # buffer for incoming data
-DATA_PORT = 9696  # port used to recieve data about when to operate the gun
 CAMERA_PORT = 6969  # port used to send camera images
 BOUNCE_TIME = 2000
 RESET_PIN = 18
@@ -49,13 +48,13 @@ gpio.add_event_detect(RESET_PIN,
                       bouncetime=BOUNCE_TIME)
 
 # Connect a camera client socket
-camera_socket = socket.socket()
+socket = socket.socket()
 
 # establish camera socket - retries until successful
 connected = False
 while not connected:
     try:
-        camera_socket.connect((TURRET_BASE_IP, CAMERA_PORT))
+        socket.connect((TURRET_BASE_IP, CAMERA_PORT))
         connected = True
         print("Connected!")
         break
@@ -63,28 +62,9 @@ while not connected:
         print("Failed to connect: " + format(e) + " retrying...")
         time.sleep(1)
         pass
-
-# Connect a client socket for receiving data
-data_socket = socket.socket()
-
-# establish a data receiving socket - retries until successful
-connected = False
-while not connected:
-    try:
-        data_socket.connect((TURRET_BASE_IP, DATA_PORT))
-        connected = True
-        print("Connected!")
-        break
-    except Exception as e:
-        print("Failed to connect: " + format(e) + " retrying...")
-        time.sleep(1)
-        pass
-
-data_socket.listen(1)
-conn, addr = data_socket.accept()
 
 # Make a file-like object out of the connection
-connection = camera_socket.makefile('wb')
+connection = socket.makefile('wb')
 try:
     with PiCamera() as camera:
         camera.resolution = (640, 480)
@@ -113,7 +93,7 @@ try:
             stream.truncate()
 
             # check the data being received from the base
-            data = conn.recv(BUFFER)
+            data = socket.recv(BUFFER)
             print("Received: ", data)
             if data == 1:
                 gpio.out(GUN_CONTROL_PIN, 1)
@@ -124,5 +104,4 @@ try:
     connection.write(struct.pack('<L', 0))
 finally:
     connection.close()
-    camera_socket.close()
-    data_socket.close()
+    socket.close()
