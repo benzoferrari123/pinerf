@@ -24,6 +24,7 @@ CAMERA_PORT = 6969  # port used to send camera images
 BOUNCE_TIME = 2000
 RESET_PIN = 18
 GUN_CONTROL_PIN = 22
+TURRET_BASE_IP = '192.168.4.1'
 
 # ignore all warnings regarding the pins being in use as we dont care
 gpio.setwarnings(False)
@@ -54,7 +55,7 @@ camera_socket = socket.socket()
 connected = False
 while not connected:
     try:
-        camera_socket.connect(('192.168.4.1', CAMERA_PORT))
+        camera_socket.connect((TURRET_BASE_IP, CAMERA_PORT))
         connected = True
         print("Connected!")
         break
@@ -70,7 +71,7 @@ data_socket = socket.socket()
 connected = False
 while not connected:
     try:
-        data_socket.connect(('192.168.4.1', DATA_PORT))
+        data_socket.connect((TURRET_BASE_IP, DATA_PORT))
         connected = True
         print("Connected!")
         break
