@@ -29,7 +29,7 @@ TURRET_BASE_IP = '192.168.4.1'  # should be constant
 gpio.setwarnings(False)
 
 # set reset pin
-gpio.setmode(gpio.BCM)  #  Broadcom GPIO numbers
+gpio.setmode(gpio.BCM)  # Broadcom GPIO numbers
 gpio.setup(GUN_CONTROL_PIN, gpio.OUT)
 gpio.setup(RESET_PIN, gpio.IN, pull_up_down=gpio.PUD_UP)  # pull up mode
 
