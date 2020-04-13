@@ -18,26 +18,26 @@ import os
 import io
 import struct
 
-BUFFER = 1024  # buffer for incoming data
+BUFFER = 1024  # buffer for incoming data, normally 1024
 CAMERA_PORT = 6969  # port used to send camera images
-BOUNCE_TIME = 2000
-RESET_PIN = 18
-GUN_CONTROL_PIN = 22
-TURRET_BASE_IP = '192.168.4.1'
+BOUNCE_TIME = 2000  # for the pins, bouncing time on reset button
+RESET_PIN = 18  # I/O pin number for reset pin
+GUN_CONTROL_PIN = 22  # I/O pin number for control pin that goes to transistor
+TURRET_BASE_IP = '192.168.4.1'  # should be constant
 
 # ignore all warnings regarding the pins being in use as we dont care
 gpio.setwarnings(False)
 
 # set reset pin
-gpio.setmode(gpio.BCM)
+gpio.setmode(gpio.BCM)  #  Broadcom GPIO numbers
 gpio.setup(GUN_CONTROL_PIN, gpio.OUT)
-gpio.setup(RESET_PIN, gpio.IN, pull_up_down=gpio.PUD_UP)
+gpio.setup(RESET_PIN, gpio.IN, pull_up_down=gpio.PUD_UP)  # pull up mode
 
 
 # function for restarting the pi
 def Restart(channel):
     print("System GPIO reboot event. The system is rebooting NOW!")
-    time.sleep(1)
+    time.sleep(1)  # give user time to read if they are connected to SSH etc..
     os.system("sudo shutdown -r now")
 
 
@@ -67,23 +67,22 @@ while not connected:
 connection = socket.makefile('wb')
 try:
     with PiCamera() as camera:
-        camera.resolution = (640, 480)
-        # Start a preview and let the camera warm up for 2 seconds
+        camera.resolution = (
+            640, 480
+        )  # Start a preview and let the camera warm up for 2 seconds
         camera.start_preview()
         time.sleep(2)
-        # Note the start time and construct a stream to hold image data
-        # temporarily (we could write it directly to connection but in this
-        # case we want to find out the size of each capture first to keep
-        # our protocol simple)
         stream = io.BytesIO()
         for foo in camera.capture_continuous(stream, 'jpeg'):
             # Write the length of the capture to the stream and flush to
             # ensure it actually gets sent
             connection.write(struct.pack('<L', stream.tell()))
             connection.flush()
-            # Rewind the stream and send the image data over the wire
+
+            # Rewind the stream and send the image data
             stream.seek(0)
             connection.write(stream.read())
+
             # Reset the stream for the next capture
             stream.seek(0)
             stream.truncate()
