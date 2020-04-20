@@ -1,10 +1,10 @@
-Documentation for PiNerf Turret
+# Documentation for PiNerf Turret
 
-Objective
+## Objective
 
 The primary objective of the turret is to provide a stablised support for the blaster such that the camera's facial regognition will remain unaffected by vibrations and movements of the system. To allow the blaster to fire in all directions, the turret system must provide freedom of rotation in two axes. Additionally, all parts of the mechanical design must be designed such that 3D printing is feasible and PLA plastic material will be strong enough to support the blaster. The final requirement is to have a connection to mains which can power both the Nerf blaster and camera.
 
-Design
+## Design
 
 The turret is held on two base plates of equal diameter connected by a flanged shaft which is screwed into the bottom base plate. Rotation around this shaft allows rotation in the x-y plane.
 
